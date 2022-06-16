@@ -1,6 +1,6 @@
 # Spreadsheet Processing Python High Code API
 
-[Product Page](https://products.aspose.com/cells/python-net) | [Docs](https://docs.aspose.com/cells/python-net/) | [Demos](https://products.aspose.app/cells/family/) | [API Reference](https://reference.aspose.com/cells/net/) | [Examples](https://github.com/aspose-cells/Aspose.Cells-for-Python-via-.NET) | [Blog](https://blog.aspose.com/category/cells/) | [Free Support](https://forum.aspose.com/c/cells) | [Temporary License](https://purchase.aspose.com/temporary-license)
+[Product Page](https://products.aspose.com/cells/python-java/) | [Docs](https://docs.aspose.com/cells/python-net/) | [Demos](https://products.aspose.app/cells/family/) | [API Reference](https://reference.aspose.com/cells/net/) | [Examples](https://github.com/aspose-cells/Aspose.Cells-for-Python-via-.NET) | [Blog](https://blog.aspose.com/category/cells/) | [Free Support](https://forum.aspose.com/c/cells) | [Temporary License](https://purchase.aspose.com/temporary-license)
 
 [Aspose.Cells for Python via .NET](https://products.aspose.com/cells/python-net/) is a scalable and feature-rich API to process Excel&reg; spreadsheets using Python. API offers Excel&reg; file creation, manipulation, conversion and rendering. Developers can format worksheets, rows, columns or cells to the most granular level, create manipulate chart and pivot tables, render worksheets, charts and specific data ranges to PDF or images, add calculate Excel&reg;'s built-in and custom formulas and much more - all without any dependency on Microsoft Office or Excel&reg; application.
 
@@ -57,7 +57,7 @@ Your machine does not need to have Microsoft Excel&reg; or OpenOffice&reg; softw
 
 ### Installation via `pip`
 
-The Aspose.Cells for Python via .NET is [available at pypi.org](https://pypi.org/project/aspose-cells-python/). To install it, please run the following command:
+The Aspose.Cells for Python via .NET is [available at pypi.org](https://pypi.org/project/aspose-cells/). To install it, please run the following command:
 
 `pip install aspose-cells-python`
 
