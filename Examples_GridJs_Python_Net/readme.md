@@ -4,7 +4,7 @@ description
 
 [Product Page](https://products.aspose.com/cells/python-net) | [Docs](https://docs.aspose.com/cells/python-net/) | [API Reference](https://reference.aspose.com/cells/python-net/) | [Demos](https://products.aspose.app/cells/family/) | [Blog](https://blog.aspose.com/category/cells/) | [Code Samples](https://github.com/aspose-cells/Aspose.Cells-for-Python-via-.NET/tree/main/Examples_GridJs_Python_Net) | [Free Support](https://forum.aspose.com/c/cells) | [Temporary License](https://purchase.aspose.com/temporary-license) | [EULA](https://company.aspose.com/legal/eula) 
 
-Try our [free online apps] (https://products.aspose.app/cells/family) demonstrating some of the most popular Aspose.Cells functionality.
+Try our [free online apps](https://products.aspose.app/cells/family) demonstrating some of the most popular Aspose.Cells functionality.
 
 This is a  demo to show how we can use GridJs to implment a spreadsheet Editor.
 
