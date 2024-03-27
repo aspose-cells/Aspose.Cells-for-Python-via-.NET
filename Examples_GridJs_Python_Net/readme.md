@@ -27,7 +27,7 @@ If you have any questions or need help,
 
 please feedback to the following website https://forum.aspose.com/c/cells/9 
 
-## referenc js lib  in the demo project:
+## reference js lib used in the demo project:
 jquery.js    v2.1.1
 
 jquery-ui.js v1.12.1 
