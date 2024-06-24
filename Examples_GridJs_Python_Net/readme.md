@@ -21,13 +21,22 @@ pip install aspose_cells_gridjs_net_python
 
 run main.py to start the web server
 
-It shall be started at http://127.0.0.1:2022
+It shall be started at http://localhost:2022
 
 If you have any questions or need help,
 
 please feedback to the following website https://forum.aspose.com/c/cells/9 
 
-## reference js lib used in the demo project:
+## Step to run in docker 
+
+docker build -t gridjs-demo-python .
+
+docker run -d -p 2022:2022 gridjs-demo-python
+
+open browser and enter the url:http://localhost:2022/
+
+
+## Reference js lib used in the demo project:
 jquery.js    v2.1.1
 
 jquery-ui.js v1.12.1 
