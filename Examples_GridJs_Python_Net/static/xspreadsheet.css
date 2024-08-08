@@ -192,9 +192,13 @@ body {
 .x-spreadsheet-dropdown .x-spreadsheet-dropdown-content {
   position: absolute;
   z-index: 200;
-  background: #f6f7f8db;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 2px;
   box-shadow: 1px 2px 5px 2px rgba(51, 51, 51, 0.15);
   max-height: 600px;
+  font-size: medium;
+  font-weight: 500;
   overflow-y: auto;
 }
 .x-spreadsheet-dropdown.bottom-left .x-spreadsheet-dropdown-content {
@@ -255,6 +259,72 @@ body {
 }
 .x-spreadsheet-dropdown .x-spreadsheet-dropdown-header .x-spreadsheet-icon.arrow-right .arrow-down {
   left: -130px;
+}
+.x-spreadsheet-autofill-option-group {
+  background-color: white;
+  position: absolute;
+  flex-direction: column;
+  display: flex;
+  width: max-content;
+  left: 0;
+  top: 25px;
+  border: 1px solid #ccc;
+  box-shadow: 4px 3px 2px 0 rgba(0, 0, 0, 0.1);
+  z-index: 999;
+}
+.x-spreadsheet-autofill-option-radio {
+  display: flex;
+  align-items: baseline;
+  padding: 5px;
+}
+.x-spreadsheet-autofill-option-radio:hover {
+  background-color: #f5f6f7;
+}
+.x-spreadsheet-autofill-option {
+  width: 30px;
+  height: 23px;
+  position: absolute;
+  z-index: 999;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1px;
+  border: 1px solid #ccc;
+}
+.x-spreadsheet-chart-button-group {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 1000;
+}
+.x-spreadsheet-chart-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-left: 1px;
+  padding-right: 1px;
+  background-color: white;
+  border: 1px solid #bbb;
+}
+.x-spreadsheet-chart-color-row {
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  padding: 2px;
+}
+.x-spreadsheet-chart-color-row:hover {
+  background-color: #f5f6f7;
+  box-shadow: 0 0 0 1px #bbb;
+}
+.x-spreadsheet-chart-button-detail {
+  width: 180px;
+  background-color: white;
+  border: 1px solid #ccc;
+  position: absolute;
+  z-index: 1001;
+  padding: 5px;
 }
 /* resizer **/
 .x-spreadsheet-resizer {
@@ -354,14 +424,32 @@ body {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
 }
+.x-spreadsheet-selector .x-spreadsheet-selector-area.dashed {
+  border: 2px dashed #4b89ff;
+}
+.x-spreadsheet-selector .x-spreadsheet-selector-validation-input-message {
+  position: relative;
+  z-index: 100;
+  background: #f5f6f7;
+  border: 2px solid #e0e2e4;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 12px;
+  color: #333;
+  box-shadow: 1px 2px 5px 2px rgba(51, 51, 51, 0.15);
+}
 .x-spreadsheet-selector .x-spreadsheet-selector-clipboard,
-.x-spreadsheet-selector .x-spreadsheet-selector-autofill {
+.x-spreadsheet-selector .x-spreadsheet-selector-autofill,
+.x-spreadsheet-selector .x-spreadsheet-selector-fixed-cell {
   position: absolute;
   background: transparent;
   z-index: 100;
 }
 .x-spreadsheet-selector .x-spreadsheet-selector-clipboard {
   border: 2px dashed #4b89ff;
+}
+.x-spreadsheet-selector .x-spreadsheet-selector-fixed-cell {
+  border: 2px solid #4b89ff;
 }
 .x-spreadsheet-selector .x-spreadsheet-selector-autofill {
   border: 1px dashed rgba(0, 0, 0, 0.45);
@@ -577,6 +665,42 @@ body {
 .x-spreadsheet-toolbar.x-spreadsheet-menubar {
   padding: 0;
   justify-content: flex-start;
+}
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-menubar-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 5px;
+  /* 适当调整右侧间距 */
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid black;
+}
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-menubar-btn,
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-item {
+  line-height: 25px;
+  height: unset;
+  padding: 2px 10px;
+  position: relative;
+}
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-menubar-btn .x-spreadsheet-menu-icon-text,
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-item .x-spreadsheet-menu-icon-text {
+  align-items: center;
+  gap: 5px;
+  padding-right: 20px;
+}
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-menubar-btn .x-spreadsheet-menu-icon-text .x-spreadsheet-icon,
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-item .x-spreadsheet-menu-icon-text .x-spreadsheet-icon {
+  transform: scale(1.2);
+}
+.x-spreadsheet-toolbar.x-spreadsheet-menubar .x-spreadsheet-divider {
+  width: 90%;
+  height: 1px;
+  margin: 2px auto;
+  background: #e0e2e4;
 }
 .x-spreadsheet-toolbar {
   border-bottom: 1px solid #e0e2e4;
@@ -806,6 +930,12 @@ body {
   margin-left: 5px;
   background-color: #d9dc22;
   font-size: 8px;
+}
+.x-spreadsheet-modal-component-input-btn {
+  border: 1px solid #0078d4;
+  color: #0078d4;
+  background: white;
+  border-radius: 0 5px 5px 0;
 }
 .x-spreadsheet-form-input {
   font-size: 1em;
@@ -1067,11 +1197,11 @@ form fieldset select {
   display: inline-block;
 }
 .x-spreadsheet-icon .x-spreadsheet-icon-img {
-  background-image: url(df0ac85291e8a4f9daef54c3c456ffa1.svg);
+  background-image: url(92a25d00d3c48133d57c1b98d48a688e.svg);
   position: absolute;
   width: 262px;
   height: 444px;
-  opacity: 0.56;
+  opacity: 0.86;
 }
 .x-spreadsheet-icon .x-spreadsheet-icon-img.undo {
   left: 0;
@@ -1385,6 +1515,22 @@ form fieldset select {
   left: -162px;
   top: -90px;
 }
+.x-spreadsheet-icon .x-spreadsheet-icon-img.number {
+  left: -180px;
+  top: -90px;
+}
+.x-spreadsheet-icon .x-spreadsheet-icon-img.font-name {
+  left: -198px;
+  top: -90px;
+}
+.x-spreadsheet-icon .x-spreadsheet-icon-img.font-size {
+  left: -216px;
+  top: -90px;
+}
+.x-spreadsheet-icon .x-spreadsheet-icon-img.data-validation {
+  left: -234px;
+  top: -90px;
+}
 .x-spreadsheet-formula-bar {
   height: 25px;
   line-height: 25px;
@@ -1393,6 +1539,202 @@ form fieldset select {
   border-bottom: 1px solid #e0e2e4;
   resize: vertical;
   overflow: hidden;
+}
+.x-spreadsheet-modal-component-input-div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.x-spreadsheet-modal-component-input-div label {
+  margin-bottom: 5px;
+}
+.x-spreadsheet-modal-component-input-div input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+.x-spreadsheet-modal-component-input-div input[type="date"],
+.x-spreadsheet-modal-component-input-div input[type="time"] {
+  padding: 0;
+}
+.x-spreadsheet-modal-component-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.x-spreadsheet-modal-component {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  height: 50%;
+  overflow: hidden;
+}
+.x-spreadsheet-modal-component:focus {
+  outline: none;
+}
+.x-spreadsheet-modal-component-content {
+  padding: 10px;
+  flex-grow: 1;
+  background: #f5f5f5;
+  overflow-y: auto;
+}
+.x-spreadsheet-modal-component-header {
+  padding: 10px 20px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 18px;
+}
+.x-spreadsheet-modal-component-footer {
+  padding: 5px 10px;
+  background: #f5f5f5;
+  border-top: 1px solid #ddd;
+  text-align: right;
+}
+.x-spreadsheet-modal-component-footer button {
+  line-height: 1.5rem;
+  padding: 5px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, border-color 0.3s;
+  margin: 5px;
+}
+.x-spreadsheet-modal-component-footer button {
+  border-color: #0078d4;
+  /* Blue border */
+  color: #0078d4;
+}
+.x-spreadsheet-modal-component-footer button:hover {
+  background-color: #e6f7ff;
+  /* Light blue background on hover */
+}
+.x-spreadsheet-modal-component-footer button:focus {
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.5);
+  /* Focus outline */
+}
+.x-spreadsheet-modal-component-footer button.cancel {
+  border-color: #ccc;
+  color: #333;
+}
+.x-spreadsheet-modal-component-footer button.cancel:hover {
+  background-color: #f0f0f0;
+}
+.x-spreadsheet-modal-component-footer button.cancel:focus {
+  box-shadow: 0 0 0 2px rgba(204, 204, 204, 0.5);
+}
+.x-spreadsheet-modal-component-section-container {
+  height: 100%;
+}
+.x-spreadsheet-modal-component-section-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: gray;
+}
+.x-spreadsheet-modal-component-section-title span {
+  flex-shrink: 0;
+}
+.x-spreadsheet-modal-component-section-line {
+  flex-grow: 1;
+  height: 1px;
+  background: lightgray;
+  margin-left: 2px;
+}
+.modal-animate {
+  transition: top 0.5s ease, height 0.5s ease;
+}
+.x-spreadsheet-modal-component-section-content {
+  padding: 0 5px;
+  border-radius: 4px;
+  height: max-content;
+}
+/* Outer wrapper for the modal component tabs */
+.x-spreadsheet-modal-component-tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.x-spreadsheet-modal-component-label {
+  font-size: 16px;
+}
+.x-spreadsheet-modal-component-checkbox {
+  display: flex;
+  align-items: baseline;
+  margin-bottom: 15px;
+}
+.x-spreadsheet-modal-component-checkbox label {
+  margin-left: 5px;
+}
+.x-spreadsheet-modal-component-dropdown {
+  display: flex;
+  flex-direction: column;
+}
+.x-spreadsheet-modal-component-dropdown select {
+  height: 35px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.x-spreadsheet-modal-component-textarea {
+  display: flex;
+  flex-direction: column;
+}
+.x-spreadsheet-modal-component-textarea textarea {
+  resize: none;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 100px;
+}
+/* Header row containing the tab buttons */
+.x-spreadsheet-modal-component-tab-headers {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+/* Individual tab buttons */
+.x-spreadsheet-modal-component-tab-button {
+  padding: 0 15px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: none;
+  outline: none;
+  transition: background-color 0.3s;
+  font-size: 16px;
+}
+/* Tab button when active */
+.x-spreadsheet-modal-component-tab-button.active {
+  background-color: #ffffff;
+  border-bottom: 2px solid #0078d4;
+  /* Blue line to indicate active tab */
+  font-weight: bold;
+}
+/* Content area for the tabs */
+.x-spreadsheet-modal-component-tab-content {
+  padding: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-top: none;
+  flex: 1;
 }
 .x-spreadsheet-bar-label {
   flex: 0 0 auto;
