@@ -1,5 +1,6 @@
 # This is a demo to show how to use GridJs .
 import configparser
+import gzip
 import io
 import mimetypes
 import os
@@ -52,7 +53,55 @@ def detail_file_json():
         return jsonify({'error': str(ex)}), 500
 
 
+@app.route('/GridJs2/DetailStreamJson', methods=['GET'])
+def detail_stream_json():
+    filename = request.args.get('filename')
+    if not filename:
+        return Response("Missing filename parameter", status=400)
 
+    file_path = os.path.join(FILE_DIRECTORY, filename)
+    try:
+        wbj = GridJsWorkbook()
+        wbj.import_excel_file(file_path)
+
+        output = io.BytesIO()
+        with gzip.GzipFile(fileobj=output, mode='wb', compresslevel=9) as gzip_stream:
+            wbj.json_to_stream(gzip_stream, filename)
+
+        response = Response(output.getvalue(), mimetype='application/json')
+        response.headers['Content-Encoding'] = 'gzip'
+
+        return response
+    except Exception as e:
+        return Response(str(e), status=500)
+
+@app.route('/GridJs2/DetailStreamJsonWithUid', methods=['GET'])
+def detail_stream_json_with_uid():
+    filename = request.args.get('filename')
+    uid = request.args.get('uid')
+    if not filename:
+        return jsonify({'error': 'filename is required'}), 400
+    if not uid:
+        return jsonify({'error': 'uid is required'}), 400
+
+    file_path = os.path.join(FILE_DIRECTORY, filename)
+    try:
+        wbj = GridJsWorkbook()
+
+
+        output = io.BytesIO()
+        with gzip.GzipFile(fileobj=output, mode='wb', compresslevel=9) as gzip_stream:
+            is_done  = wbj.json_to_stream_by_uid(gzip_stream,uid, filename)
+            if not is_done:
+                wbj.import_excel_file(uid,file_path)
+                wbj.json_to_stream(gzip_stream, filename)
+
+        response = Response(output.getvalue(), mimetype='application/json')
+        response.headers['Content-Encoding'] = 'gzip'
+
+        return response
+    except Exception as e:
+        return Response(str(e), status=500)
 
 # get json info from : /GridJs2/DetailFileJsonWithUid?filename=&uid=
 @app.route('/GridJs2/DetailFileJsonWithUid', methods=['GET'])
