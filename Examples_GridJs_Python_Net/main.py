@@ -103,6 +103,30 @@ def detail_stream_json_with_uid():
     except Exception as e:
         return Response(str(e), status=500)
 
+
+@app.route('/GridJs2/LazyLoading', methods=['POST'])
+def lazy_loading():
+    sheet_name = request.form.get('name', '')
+    uid = request.form.get('uid', '')
+    if not sheet_name:
+        return jsonify({'error': 'sheet_name is required'}), 400
+    if not uid:
+        return jsonify({'error': 'uid is required'}), 400
+
+    wbj = GridJsWorkbook()
+    try:
+
+        output = io.BytesIO()
+        with gzip.GzipFile(fileobj=output, mode='wb', compresslevel=9) as gzip_stream:
+            wbj.lazy_loading_stream(gzip_stream, uid, sheet_name)
+
+        response = Response(output.getvalue(), mimetype='application/json')
+        response.headers['Content-Encoding'] = 'gzip'
+
+        return response
+    except Exception as e:
+        return Response(str(e), status=500)
+
 # get json info from : /GridJs2/DetailFileJsonWithUid?filename=&uid=
 @app.route('/GridJs2/DetailFileJsonWithUid', methods=['GET'])
 def detail_file_json_with_uid():
@@ -363,6 +387,8 @@ def do_at_start(name):
 
     print(f'Hi, {name}  {FILE_DIRECTORY}')
 
+    #whether to load worksheets with lazy loading
+    Config.lazy_loading = True
 
     # do some init work for GridJS
     # set storage cache directory for GridJs
