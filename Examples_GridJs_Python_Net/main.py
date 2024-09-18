@@ -344,7 +344,7 @@ def get_zip_file():
         abort(404, description='File not found')
 
 
-#get file: /GridJs2/GetFile?uid=&id=
+#get file: /GridJs2/GetFile?id=&filename=
 @app.route('/GridJs2/GetFile', methods=['GET'])
 def get_file():
     id = request.args.get('id')
@@ -388,7 +388,7 @@ def do_at_start(name):
     print(f'Hi, {name}  {FILE_DIRECTORY}')
 
     #whether to load worksheets with lazy loading
-    Config.lazy_loading = True
+    Config.set_lazy_loading(True)
 
     # do some init work for GridJS
     # set storage cache directory for GridJs
