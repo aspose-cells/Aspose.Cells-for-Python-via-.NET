@@ -31,22 +31,21 @@ def detail_file_json():
     if not filename:
         return jsonify({'error': 'filename is required'}), 400
     gwb = GridJsWorkbook()
-    # 构造文件的完整路径
+    # the full path of the file
     file_path = os.path.join(FILE_DIRECTORY, filename)
 
-    # 检查文件是否存在
+    # check if the file exists
     if not os.path.isfile(file_path):
         return jsonify({'error': 'file not found'}), 404
     try:
         gwb.import_excel_file(file_path)
         ret = gwb.export_to_json(filename)
-        # 创建一个响应对象，传入响应体、状态码、头部信息等
+        # create a response object, passing in the response body, status code, headers, etc.
         response = Response(ret, status=200, mimetype='text/plain')
 
-        # 设置响应的字符编码为UTF-8
+        # set the character encoding of the response to UTF-8 
         response.headers['Content-Type'] = 'text/plain; charset=utf-8'
 
-        # 返回响应对象
         return response
 
     except Exception as ex:
@@ -139,7 +138,7 @@ def detail_file_json_with_uid():
     gwb = GridJsWorkbook()
     file_path = os.path.join(FILE_DIRECTORY, filename)
 
-    # 检查文件是否存在
+    # check if the file exists
     if not os.path.isfile(file_path):
         return jsonify({'error': 'file not found:'+file_path}), 404
     try:
@@ -147,13 +146,12 @@ def detail_file_json_with_uid():
         if sb == None:
             gwb.import_excel_file(uid, file_path)
             sb = gwb.export_to_json(filename)
-        # 创建一个响应对象，传入响应体、状态码、头部信息等
+        # create a response object, passing in the response body, status code, headers, etc.
         response = Response(sb, status=200, mimetype='text/plain')
 
-        # 设置响应的字符编码为UTF-8
+        # set the character encoding of the response to UTF-8 
         response.headers['Content-Type'] = 'text/plain; charset=utf-8'
 
-        # 返回响应对象
         return response
 
     except Exception as ex:
@@ -162,18 +160,17 @@ def detail_file_json_with_uid():
 # update action :/GridJs2/UpdateCell
 @app.route('/GridJs2/UpdateCell', methods=['POST'])
 def update_cell():
-    # 从请求中获取表单数据
+    # retrieve form data from the request
     p = request.form.get('p')
     uid = request.form.get('uid')
 
-    # 创建GridJsWorkbook实例
+    # create an instance of GridJsWorkbook
     gwb = GridJsWorkbook()
 
-    # 调用UpdateCell方法并获取结果
+    # call the UpdateCell method and get the result
     ret = gwb.update_cell(p, uid)
 
-    # 返回一个JSON响应，因为Flask默认返回JSON
-    # 如果你确实需要返回纯文本，你可以修改Content-Type并返回字符串
+    # return a JSON response, as Flask defaults to returning JSON
     return Response(ret, content_type='text/plain; charset=utf-8')
 
 # add image :/GridJs2/AddImage
@@ -183,11 +180,10 @@ def add_image():
     p = request.form.get('p')
     iscontrol = request.form.get('control')
     gwb = GridJsWorkbook()
-    # 检查是否有文件上传
 
     if iscontrol is None:
             if 'image' not in request.files:
-            # 没有文件上传，检查iscontrol是否为空
+            # no image upload
 
                 ret = gwb.insert_image(uid, p, None, None)
                 return jsonify(ret)
@@ -196,18 +192,16 @@ def add_image():
                 file = request.files['image']
 
                 if file.filename == '':
-                    # 文件名为空，返回错误
                     return jsonify(gwb.error_json("no file when add image"))
                 else:
-                    # 有文件上传
+                    # image upload
                     try:
-                    # 调用InsertImage方法并返回结果
+                    # call InsertImage  method and get the result
                         file_bytes = io.BytesIO(file.read())
                         print('file length  is:'+str(len(file_bytes.getvalue())))
                         ret = gwb.insert_image(uid, p, file_bytes, None)
                         return jsonify(ret)
                     except Exception as e:
-                        # 发生异常，返回错误信息
                         return jsonify(gwb.error_json(str(e)))
 
     else:
@@ -216,7 +210,6 @@ def add_image():
             ret = gwb.insert_image(uid, p, None, None)
             return jsonify(ret)
         except Exception as e:
-            # 发生异常，返回错误信息
             return jsonify(gwb.error_json(str(e)))
 
 # copy image :/GridJs2/CopyImage
@@ -230,7 +223,7 @@ def copy_image():
 
 def get_stream_from_url(url):
     response = requests.get(url)
-    response.raise_for_status()  # 如果请求失败，这会抛出HTTPError
+    response.raise_for_status()  # if fail,raise HTTPError
     return io.BytesIO(response.content)
 
 # add image by image source url:/GridJs2/AddImageByURL
@@ -259,30 +252,30 @@ def image():
     uid = request.args.get('uid')
 
     if fileid is None or uid is None:
-        # 如果缺少参数，返回错误响应
+        # if required parameters are missing, return an error response  
         return 'Missing required parameters', 400
     else:
-        # 获取图片流
+        # retrieve the image stream  
         image_stream = GridJsWorkbook.get_image_stream(uid, fileid)
 
-         # 设置响应的 MIME 类型和附件名（如果需要的话）
+         # set the MIME type and attachment filename for the response (if needed)
         mimetype = 'image/png'
         attachment_filename = fileid
 
-        # 发送文件流作为响应
+        #  send the file stream as the response  
         return send_file(
             image_stream,
-            as_attachment=False,  # 如果作为附件发送
-            download_name=attachment_filename,  # 下载时的文件名
+            as_attachment=False,  # if sending as an attachment  
+            download_name=attachment_filename,  # filename for download  
             mimetype=mimetype
         )
 
 
 def guess_mime_type_from_filename(filename):
-    # 猜测 MIME 类型
+    # guess the MIME type based on the filename  
     mime_type, encoding = mimetypes.guess_type(filename)
     if mime_type is None:
-        # 如果没有找到，返回默认的二进制 MIME 类型
+        # if not found, return the default binary MIME type  
         mime_type = 'application/octet-stream'
     return mime_type
 
@@ -298,22 +291,22 @@ def ole():
     filebyte = gwb.get_ole(uid, sheet, oleid, filename)
     if filename != None:
 
-        # 获取图片流
+        # retrieve the image stream  
         ole_stream = io.BytesIO(filebyte)
 
-    # 设置响应的 MIME 类型和附件名（如果需要的话）
+    # set the MIME type and attachment filename for the response (if needed)
         mimetype = guess_mime_type_from_filename(filename)
 
 
-    # 发送文件流作为响应
+    # send the file stream as the response 
         return send_file(
             ole_stream,
-            as_attachment=True,  # 如果作为附件发送
-            download_name=filename,  # 下载时的文件名
+            as_attachment=True,  # if sending as an attachment  
+            download_name=filename,  # filename for download
             mimetype=mimetype
         )
     else:
-        # 如果没有获取到文件名，返回 404 错误
+        # file not find
         abort(400, 'File not found')
 
 
@@ -331,16 +324,16 @@ def image_url():
 def get_zip_file():
     file = request.args.get('f')
     file_path = os.path.join(Config.file_cache_directory, file)
-    # 检查文件是否存在
+    # check if the file exists
     if os.path.isfile(file_path):
-        # 设置 MIME 类型为 application/zip
+        # set the MIME type application/zip
         mimetype = 'application/zip'
 
-        # 使用 send_file 发送文件作为响应
-        # as_attachment=True 表示作为附件发送，download_name 指定下载时的文件名
+        # use send_file to send a file as a response  
+        # as_attachment=True Send the file as an attachment  ，download_name Specify the filename for download  
         return send_file(file_path, as_attachment=True, download_name=file, mimetype=mimetype)
     else:
-        # 如果文件不存在，返回 404 错误
+        # If the file does not exist, return a 404 error  
         abort(404, description='File not found')
 
 
@@ -352,12 +345,11 @@ def get_file():
     if filename != None:
         mimetype=guess_mime_type_from_filename(filename)
         file_path = os.path.join(Config.file_cache_directory, id.replace('/', '.')+"."+filename)
-        # 检查文件是否存在
+        # check if the file exists
         if os.path.isfile(file_path):
-            # 设置 MIME 类型为 application/zip
-
-            # 使用 send_file 发送文件作为响应
-            # as_attachment=True 表示作为附件发送，download_name 指定下载时的文件名
+            # set the MIME type application/zip
+            # use send_file to send a file as a response  
+            # as_attachment=True Send the file as an attachment，download_name Specify the filename for download  
             return send_file(file_path, as_attachment=True, download_name=filename, mimetype=mimetype)
     else:
         abort(404, description='FileName is none')
