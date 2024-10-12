@@ -245,7 +245,7 @@ def add_image_by_url():
         return jsonify(gwb.error_json('image url is null'))
 
 
-#get image :/GridJs2/Image
+# get image :/GridJs2/Image
 @app.route('/GridJs2/Image', methods=['GET'])
 def image():
     fileid = request.args.get('id')
@@ -310,7 +310,7 @@ def ole():
         abort(400, 'File not found')
 
 
-#get batch zip image file url : /GridJs2/ImageUrl?uid=&id=
+# get batch zip image file url : /GridJs2/ImageUrl?uid=&id=
 @app.route('/GridJs2/ImageUrl', methods=['GET'])
 def image_url():
     id = request.args.get('id')
@@ -319,7 +319,7 @@ def image_url():
     return  jsonify("/GridJs2/GetZipFile?f="+ file)
 
 
-#get zip file : /GridJs2/GetZipFile?f=
+# get zip file : /GridJs2/GetZipFile?f=
 @app.route('/GridJs2/GetZipFile', methods=['GET'])
 def get_zip_file():
     file = request.args.get('f')
@@ -337,7 +337,7 @@ def get_zip_file():
         abort(404, description='File not found')
 
 
-#get file: /GridJs2/GetFile?id=&filename=
+# get file: /GridJs2/GetFile?id=&filename=
 @app.route('/GridJs2/GetFile', methods=['GET'])
 def get_file():
     id = request.args.get('id')
@@ -379,7 +379,7 @@ def do_at_start(name):
 
     print(f'Hi, {name}  {FILE_DIRECTORY}')
 
-    #whether to load worksheets with lazy loading
+    # whether to load worksheets with lazy loading
     Config.set_lazy_loading(True)
 
     # do some init work for GridJS
