@@ -1,5 +1,5 @@
 # use Python 3.11 as parent image
-FROM python:3.11-slim  
+FROM python:3.12-slim  
 # web port
 EXPOSE 2022
 

@@ -112,7 +112,7 @@ def detail_stream_json_with_uid():
     if not uid:
         return jsonify({'error': 'uid is required'}), 400
     if not fromUpload:
-    file_path = os.path.join(FILE_DIRECTORY, filename)
+        file_path = os.path.join(FILE_DIRECTORY, filename)
     else:
         file_path = os.path.join(UPLOAD_FOLDER, filename)
     try:
