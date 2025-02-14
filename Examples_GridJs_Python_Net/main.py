@@ -16,12 +16,40 @@ config.read('config.ini')
 app=Flask(__name__)
 # your working file directory which has spreadsheet files inside wb directory，
 FILE_DIRECTORY = os.path.join(os.getcwd(),'wb')
+UPLOAD_FOLDER = os.path.join(os.getcwd(),'upload')
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
 
 @app.route('/')
 def index():
     filename=config.get('DEFAULT', 'FileName')
     return render_template('uidload.html',filename= filename,uid=GridJsWorkbook.get_uid_for_file(filename))
 
+@app.route('/list')
+def list():
+    files = os.listdir(FILE_DIRECTORY)
+    return render_template('list.html', files=files)
+
+@app.route('/Uidtml', methods=['GET'])
+def uidtml():
+    filename = request.args.get('filename')
+    uid = request.args.get('uid')
+    return render_template('uidload.html',filename= filename,uid= uid)
+
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+    try:
+        file.save(os.path.join(UPLOAD_FOLDER, file.filename))
+        return render_template('uidload.html',filename= file.filename,uid=GridJsWorkbook.get_uid_for_file(file.filename),fromupload=1)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 # get json info from  /GridJs2/DetailJson?filename=
@@ -78,12 +106,15 @@ def detail_stream_json():
 def detail_stream_json_with_uid():
     filename = request.args.get('filename')
     uid = request.args.get('uid')
+    fromUpload = request.args.get('fromUpload')
     if not filename:
         return jsonify({'error': 'filename is required'}), 400
     if not uid:
         return jsonify({'error': 'uid is required'}), 400
-
+    if not fromUpload:
     file_path = os.path.join(FILE_DIRECTORY, filename)
+    else:
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
     try:
         wbj = GridJsWorkbook()
 
@@ -377,7 +408,8 @@ def download():
 
 def do_at_start(name):
 
-    print(f'Hi, {name}  {FILE_DIRECTORY}')
+    print(f'Hi, {name}  {FILE_DIRECTORY} ')
+
 
     # whether to load worksheets with lazy loading
     Config.set_lazy_loading(True)
@@ -386,9 +418,10 @@ def do_at_start(name):
     # set storage cache directory for GridJs
     Config.set_file_cache_directory(config.get('DEFAULT', 'CacheDir'))
     # set License for GridJs
-    Config.set_license(config.get('DEFAULT', 'LicenseFile'))
+    if os.path.exists(config.get('DEFAULT', 'LicenseFile')):
+        Config.set_license(config.get('DEFAULT', 'LicenseFile'))
     # set Image route for GridJs,correspond with image()
-    GridJsWorkbook.set_image_url_base("/GridJs2/Image");
+    GridJsWorkbook.set_image_url_base("/GridJs2/Image")
     print(f'{Config.file_cache_directory}')
 
 

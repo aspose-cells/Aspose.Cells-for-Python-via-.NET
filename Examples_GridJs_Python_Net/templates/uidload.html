@@ -35,8 +35,8 @@
      <script src="{{ url_for('static', filename='./xspreadsheet.js') }}"></script>
      -->
     <!--for release reference-->
-    <link rel="stylesheet" href="https://unpkg.com/gridjs-spreadsheet@24.10.1/xspreadsheet.css">
-    <script src="https://unpkg.com/gridjs-spreadsheet@24.10.1/xspreadsheet.js"></script> 
+    <link rel="stylesheet" href="https://unpkg.com/gridjs-spreadsheet/xspreadsheet.css">
+    <script src="https://unpkg.com/gridjs-spreadsheet/xspreadsheet.js"></script>
      
 
 
@@ -81,7 +81,7 @@
             $.ajax({
 
               //  url: '/GridJs2/DetailFileJsonWithUid?filename={{ filename }}&uid={{ uid }}',
-                url: '/GridJs2/DetailStreamJsonWithUid?filename={{ filename }}&uid={{ uid }}',
+                url: '/GridJs2/DetailStreamJsonWithUid?filename={{ filename }}&uid={{ uid }}&fromUpload={{ fromupload }}',
 
                 type: 'GET',
 
@@ -192,7 +192,28 @@
             }).on('sheet-loaded', (id, name) => {
                 console.log('sheet is loaded id:', id, ', name: ', name);
             }).on('cell-edited', (text, ri, ci) => {
-                console.log('text:', text, ', ri: ', ri, ', ci:', ci);
+                console.log('edit text:', text, ', ri: ', ri, ', ci:', ci);
+            });
+            xs.on('cells-updated', (name, cells) => {
+                console.log('cells updated for sheet name:', name);
+                cells.forEach((acell, index, array) => {
+                    console.log('acell got updated:', acell);
+                })
+            }).on('cells-deleted', (range) => {
+                console.log('cells deleted :', range);
+
+            }).on('rows-deleted', (ri, n) => {
+                console.log('rows-deleted :', ri, ",size", n);
+
+            }).on('columns-deleted', (ci, n) => {
+                console.log('columns-deleted :', ci, ",size", n);
+
+            }).on('rows-inserted', (ri, n) => {
+                console.log('rows-inserted :', ri, ",size", n);
+
+            }).on('columns-inserted', (ci, n) => {
+                console.log('columns-inserted :', ci, ",size", n);
+
             });
 
 
@@ -204,6 +225,7 @@
             xs.setFileDownloadInfo(fileDownloadUrl);
             xs.setOleDownloadInfo(oleDownloadUrl);
             xs.setLazyLoadingUrl(lazyLoadingUrl);
+            xs.setOpenFileUrl("/list");
 
             let activeSheetName = jsondata.actname;
 

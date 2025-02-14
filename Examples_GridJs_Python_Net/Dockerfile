@@ -28,6 +28,7 @@ COPY . /app
  
 RUN pip install --no-cache-dir -r requirements.txt  
 RUN mkdir -p /app/wb
+RUN mkdir -p /app/upload
 RUN mkdir -p /app/grid_cache/  
 COPY wb/*.xlsx /app/wb/
 

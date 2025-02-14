@@ -6,12 +6,17 @@ description
 
 Try our [free online apps](https://products.aspose.app/cells/family) demonstrating some of the most popular Aspose.Cells functionality.
 
-This is a  demo to show how we can use GridJs to implment a spreadsheet Editor.
+This is a  demo to show how we can use GridJs to implement a spreadsheet Editor.
+
+## Preview
+
+<img alt='demo' src='https://unpkg.com/gridjs-spreadsheet@25.1.0/preview.gif' />
 
 ## Step by step to run the demo
-Edit the properties in `config.ini` to match your enviroment.
 
-install the following package:
+1. Edit the properties in `config.ini` to match your environment.
+
+2. install the following package:
 
 pip install requests
 
@@ -19,9 +24,9 @@ pip install flask
 
 pip install aspose_cells_gridjs_net_python
 
-run main.py to start the web server
+3. run python main.py to start the web server
 
-It shall be started at http://localhost:2022
+open browser and enter the url:http://localhost:2022/list
 
 If you have any questions or need help,
 
@@ -29,14 +34,23 @@ please feedback to the following website https://forum.aspose.com/c/cells/9
 
 ## Step to run in docker 
 
-docker build -t gridjs-demo-python .
+1. docker build -t gridjs-demo-python .
 
-docker run -d -p 2022:2022 gridjs-demo-python
 
-open browser and enter the url:http://localhost:2022/
+
+2. run with aspose license file:
+
+      docker run -d -p 2022:2022  -v C:/path/to/license.txt:/app/license gridjs-demo-python
+	  
+   or just run the demo in trial mode:
+   
+      docker run -d -p 2022:2022 gridjs-demo-python 
+
+3. open browser and enter the url:http://localhost:2022/list
 
 
 ## Reference js lib used in the demo project:
+
 jquery.js    v2.1.1
 
 jquery-ui.js v1.12.1 
