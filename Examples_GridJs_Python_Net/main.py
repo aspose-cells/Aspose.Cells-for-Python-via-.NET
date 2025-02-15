@@ -428,5 +428,5 @@ def do_at_start(name):
 
 if __name__ == '__main__':
     do_at_start('hello gridjs')
-    app.run(port=2022, host="127.0.0.1", debug=True)
+    app.run(port=2022, host="0.0.0.0", debug=True)
 
