@@ -40,12 +40,14 @@ please feedback to the following website https://forum.aspose.com/c/cells/9
 
 2. run with aspose license file:
 
+```bash
       docker run -d -p 2022:2022  -v C:/path/to/license.txt:/app/license gridjs-demo-python
-	  
+```
    or just run the demo in trial mode:
    
+```bash
       docker run -d -p 2022:2022 gridjs-demo-python 
-
+```
 3. open browser and enter the url:http://localhost:2022/list
 
 
