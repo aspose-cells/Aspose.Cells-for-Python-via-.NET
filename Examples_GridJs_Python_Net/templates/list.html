@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aspose.Cells.GridJs Demo</title>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* 标题样式 */
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 24px;
+        }
+
+        /* 主内容区域 */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Upload 按钮样式 */
+        .upload-button {
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 隐藏文件输入框 */
+        #file-upload {
+            display: none;
+        }
+
+        /* 文件列表样式 */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面标题 -->
+    <div class="header">
+        Aspose.Cells.GridJs Demo For .Python
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="container">
+        <h2>Select a local file to start show workbook</h2>
+        <!-- Upload 表单 -->
+        <form id="upload-form" action="upload" method="POST" enctype="multipart/form-data">
+            <button type="button" class="upload-button" onclick="document.getElementById('file-upload').click()">Upload</button>
+            <input type="file" id="file-upload" name="file" onchange="submitForm()" style="display: none;">
+        </form>
+
+        <!-- 文件列表 -->
+        <h2>Navigate one of the below file to start show workbook</h2>
+        <ul>
+            {% for file in files %}
+                <li>
+                    <a href="#" onclick="openfile('{{ file }}')">{{ file }}</a>
+
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        function generateUid() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (char) {
+            const random = Math.random() * 16 | 0;
+            const value = char === 'x' ? random : (random & 0x3 | 0x8);
+            return value.toString(16);
+            });
+        }
+        function generateUidFilename(filename) {
+
+            const ext = filename.includes('.') ? filename.split('.').pop() : '';
+            const uid = generateUid();
+            const newFilename = `${uid}${ext ? '.' + ext : ''}`;
+
+            return newFilename;
+        }
+
+        // JavaScript function to handle file click
+        function openfile(name) {
+             //alert(`You clicked on file: ${name}`);
+             const url =  '/Uidtml'  + '?filename=' + name+'&uid='+generateUidFilename(name);
+             window.open(url, "_blank");
+        }
+
+        // Automatically submit the form when a file is selected
+        function submitForm() {
+            const form = document.getElementById('upload-form');
+            form.submit();
+        }
+    </script>
+</body>
+</html>
