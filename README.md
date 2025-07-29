@@ -85,20 +85,6 @@ cell.put_value("Hello World!")
 workbook.save("HelloWorld.xlsx")
 ```
 
-## Convert Excel&reg; `XLSX` File to `PDF` using Python
-
-```python
-#import the python package
-import aspose.cells
-from aspose.cells import License,Workbook,FileFormatType
-
-#Open a existing Workbook
-workbook = Workbook("bookwithChart.xlsx")
-
-#save this workbook to PDF file,you can see a chart while open the file with MS Excel&reg;*/
-workbook.save("Convert.pdf");
-```
-
 ## Create Excel File and set style for the cells
 
 ```python
@@ -138,5 +124,91 @@ cell.set_style(style)
 #save this workbook 
 workbook.save("Style.xlsx")
 ```
+
+## Create a chart
+
+```python
+from aspose.cells import Workbook
+from aspose.cells.charts import ChartType
+
+# Instantiating a Workbook object
+workbook = Workbook()
+# Adding a new worksheet to the Excel object
+sheetIndex = workbook.worksheets.add()
+# Obtaining the reference of the newly added worksheet by passing its sheet index
+worksheet = workbook.worksheets[sheetIndex]
+# Adding sample values to cells
+worksheet.cells.get("A1").put_value(50)
+worksheet.cells.get("A2").put_value(100)
+worksheet.cells.get("A3").put_value(170)
+worksheet.cells.get("A4").put_value(300)
+worksheet.cells.get("B1").put_value(160)
+worksheet.cells.get("B2").put_value(32)
+worksheet.cells.get("B3").put_value(50)
+worksheet.cells.get("B4").put_value(40)
+# Adding sample values to cells as category data
+worksheet.cells.get("C1").put_value("Q1")
+worksheet.cells.get("C2").put_value("Q2")
+worksheet.cells.get("C3").put_value("Y1")
+worksheet.cells.get("C4").put_value("Y2")
+# Adding a chart to the worksheet
+chartIndex = worksheet.charts.add(ChartType.COLUMN, 5, 0, 15, 5)
+# Accessing the instance of the newly added chart
+chart = worksheet.charts[chartIndex]
+# Adding SeriesCollection (chart data source) to the chart ranging from "A1" cell to "B4"
+chart.n_series.add("A1:B4", True)
+# Setting the data source for the category data of SeriesCollection
+chart.n_series.category_data = "C1:C4"
+# Saving the Excel file
+workbook.save("Chart.xlsx")
+```
+
+## Convert Excel&reg; `XLSX` File to `PDF`
+
+```python
+#import the python package
+import aspose.cells
+from aspose.cells import License,Workbook,FileFormatType
+
+#Open a existing Workbook
+workbook = Workbook("bookwithChart.xlsx")
+
+#save this workbook to PDF file,you can see a chart while open the file with MS Excel&reg;*/
+workbook.save("Convert.pdf");
+```
+
+## Convert Excel&reg; `XLSX` File to `MD`
+
+```python
+from aspose.cells import Workbook
+
+# Instantiating a Workbook object
+workbook = Workbook()
+# Obtaining the reference of the newly added worksheet
+sheet = workbook.worksheets[0]
+cells = sheet.cells
+# Setting the value to the cells
+cells.get("A1").put_value("First name")
+cells.get("A2").put_value("Simon")
+cells.get("A3").put_value("Kevin")
+cells.get("A4").put_value("Leo")
+cells.get("A5").put_value("Johnson")
+
+cells.get("B1").put_value("Age")
+cells.get("B2").put_value(32)
+cells.get("B3").put_value(33)
+cells.get("B4").put_value(34)
+cells.get("B5").put_value(35)
+
+cells.get("C1").put_value("Value")
+cells.get("C2").put_value(123.546)
+cells.get("C3").put_value(56.78)
+cells.get("C4").put_value(34)
+cells.get("C5").put_value(9)
+# Saving the Excel file to MD
+workbook.save("MarkDown.md")
+```
+
+
 
 [Product Page](https://products.aspose.com/cells/python-net) | [Docs](https://docs.aspose.com/cells/python-net/) | [Demos](https://products.aspose.app/cells/family/) | [API Reference](https://reference.aspose.com/cells/net/) | [Examples](https://github.com/aspose-cells/Aspose.Cells-for-Python-via-.NET) | [Blog](https://blog.aspose.com/category/cells/) | [Free Support](https://forum.aspose.com/c/cells) | [Temporary License](https://purchase.aspose.com/temporary-license)
