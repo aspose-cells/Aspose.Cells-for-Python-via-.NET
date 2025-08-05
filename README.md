@@ -224,7 +224,7 @@ workbook = Workbook(input_stream)
 
 # Save to a memory stream
 out_stream = io.BytesIO()
-workbook.save(out_stream, SaveFormat.MD)
+workbook.save(out_stream, SaveFormat.MARKDOWN)
 
 # Write the memory stream to an output file
 with open('HelloWorld.md', 'wb') as f:
