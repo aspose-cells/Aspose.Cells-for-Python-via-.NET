@@ -209,6 +209,26 @@ cells.get("C5").put_value(9)
 workbook.save("MarkDown.md")
 ```
 
+## Convert Excel&reg; `XLSX` File to `MD` via Stream
 
+```python
+import io
+from aspose.cells import Workbook, SaveFormat
+
+# Read the input file into a memory stream
+with open('HelloWorld.xlsx', 'rb') as file:
+    input_stream = io.BytesIO(file.read())
+
+# Create a Workbook object
+workbook = Workbook(input_stream)
+
+# Save to a memory stream
+out_stream = io.BytesIO()
+workbook.save(out_stream, SaveFormat.MD)
+
+# Write the memory stream to an output file
+with open('HelloWorld.md', 'wb') as f:
+    f.write(out_stream.getvalue())
+```
 
 [Product Page](https://products.aspose.com/cells/python-net) | [Docs](https://docs.aspose.com/cells/python-net/) | [Demos](https://products.aspose.app/cells/family/) | [API Reference](https://reference.aspose.com/cells/net/) | [Examples](https://github.com/aspose-cells/Aspose.Cells-for-Python-via-.NET) | [Blog](https://blog.aspose.com/category/cells/) | [Free Support](https://forum.aspose.com/c/cells) | [Temporary License](https://purchase.aspose.com/temporary-license)
