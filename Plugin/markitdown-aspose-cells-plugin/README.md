@@ -1,4 +1,4 @@
-# MarkItDown markitdown_aspose_cells_plugin
+# MarkItDown Aspose Cells Plugin
 
 
 ## Advantages of this plugin
@@ -39,7 +39,7 @@ class AsposeCellsConverter(DocumentConverter):
             markdown=textStr,
         )
 ```
-This project shows how to create an markitdown_aspose_cells_plugin for MarkItDown. The most important parts are as follows:
+The source code of this project shows how to create an markitdown_aspose_cells_plugin for MarkItDown. The most important parts are as follows:
 
 ## Installation
 
