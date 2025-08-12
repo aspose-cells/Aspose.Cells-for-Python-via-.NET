@@ -1,8 +1,44 @@
 # MarkItDown markitdown_aspose_cells_plugin
 
 
-The native MarkItdown tool supports limited file conversions to Markdown. By integrating the markitdown_aspose_cells_plugin, you can extend compatibility to include ODS, XLSB, and other spreadsheet formats.
+## Advantages of this plugin
 
+### Supports conversion of more file formats
+
+The native MarkItdown tool supports limited file conversions to Markdown. By integrating the markitdown_aspose_cells_plugin, you can extend compatibility to include **ODS**, **XLSB**, and other spreadsheet formats.
+
+
+### Configurable conversion results
+Users can configure different properties of **MarkdownSaveOptions** in the code below to achieve the desired conversion results. For details, please refer to the [MarkdownSaveOptions](https://reference.aspose.com/cells/python-net/aspose.cells/markdownsaveoptions/) property documentation.
+
+```python
+
+class AsposeCellsConverter(DocumentConverter):
+
+    ...
+    ...
+
+    def convert(
+        self,
+        file_stream: BinaryIO,
+        stream_info: StreamInfo,
+        **kwargs: Any,
+    ) -> DocumentConverterResult:
+        LicenseManager().apply_license()
+        workbook = Workbook(file_stream)
+        out_stream = io.BytesIO()
+        opt = MarkdownSaveOptions()
+        # Set other properties
+        # ...
+        # ...
+        # ...
+        workbook.save(out_stream, opt)
+        textStr = out_stream.getvalue().decode('utf-8')
+        return DocumentConverterResult(
+            title=None,
+            markdown=textStr,
+        )
+```
 This project shows how to create an markitdown_aspose_cells_plugin for MarkItDown. The most important parts are as follows:
 
 ## Installation

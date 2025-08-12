@@ -33,8 +33,8 @@ def register_converters(markitdown: MarkItDown, **kwargs):
     markitdown.register_converter(AsposeCellsConverter())
 
     # E,g. for Windows:
-    # PowerShell£º$env:ASPOSE_LICENSE_PATH = "D:\Files\Aspose.Cells.lic"
-    # CDM£º       set ASPOSE_LICENSE_PATH=D:\Files\Aspose.Cells.lic
+    # PowerShell: $env:ASPOSE_LICENSE_PATH = "D:\Files\Aspose.Cells.lic"
+    # CDM:        set ASPOSE_LICENSE_PATH=D:\Files\Aspose.Cells.lic
 class LicenseManager:
     def __init__(self):
         self.license_path = os.getenv("ASPOSE_LICENSE_PATH")
