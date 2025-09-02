@@ -3,9 +3,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
-Marker converts XLSX documents to markdown, JSON, and HTML quickly and accurately.
-We can replace openpyxl with aspose-cells-python in marker\marker\providers\spreadsheet.py to achieve the same functionality.
-Marker always converts XLSX files to PDF first, and then to other formats. Marker only supports the XLSX format for Excel.
+Marker converts XLSX documents to markdown, JSON, and HTML quickly and accurately.  
+
+We can replace **openpyxl** with **aspose-cells-python** in `marker\marker\providers\spreadsheet.py` to achieve the same functionality.  
+
+Marker always converts XLSX files to PDF first, and then to other formats. Marker only supports the XLSX format.
 
 # Installation
 
