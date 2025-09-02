@@ -24,6 +24,8 @@ If you want to use marker on documents other than PDFs, you will need to install
 ```shell
 pip install marker-pdf[full]
 ```
+When you run the above command in a virtual Python environment, you will find that there are many executable programs in `.venv\Scripts`, such as `marker_single`.  
+You can use it to convert a single file, as shown below:
 
 ## Convert a single file
 
