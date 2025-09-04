@@ -38,6 +38,8 @@ More [detailed installation instructions](https://docling-project.github.io/docl
 
 ```python
 docling  /path/test.xlsx --to html
+docling  /path/test.xlsx --to md
+docling  /path/test.xlsx --to json
 ```
 
 More [advanced usage options](https://docling-project.github.io/docling/usage/) are available in
@@ -68,10 +70,3 @@ export ASPOSE_LICENSE_PATH="/path/to/license"
 ```
 
 
-### Open Source AI
-
-The project was started by the AI for knowledge team at IBM Research Zurich.
-
-[supported_formats]: https://docling-project.github.io/docling/usage/supported_formats/
-[docling_document]: https://docling-project.github.io/docling/concepts/docling_document/
-[integrations]: https://docling-project.github.io/docling/integrations/
