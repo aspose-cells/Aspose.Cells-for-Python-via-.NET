@@ -17,7 +17,7 @@ from docling_core.types.doc import (
     TableCell,
     TableData,
 )
-from aspose.cells import Workbook,WorksheetCollection,Worksheet
+from aspose.cells import Workbook, WorksheetCollection, Worksheet
 from aspose.cells.drawing import Picture
 from PIL import Image as PILImage
 from pydantic import BaseModel, NonNegativeInt, PositiveInt
@@ -33,24 +33,21 @@ from docling.datamodel.document import InputDocument
 _log = logging.getLogger(__name__)
 
 
-# E,g. for Windows:
+# Example for Windows:
 # PowerShell: $env:ASPOSE_LICENSE_PATH = "D:\Files\Aspose.Cells.lic"
-# CDM:        set ASPOSE_LICENSE_PATH=D:\Files\Aspose.Cells.lic
+# CMD:        set ASPOSE_LICENSE_PATH=D:\Files\Aspose.Cells.lic
 class LicenseManager:
     def __init__(self):
         self.license_path = os.getenv("ASPOSE_LICENSE_PATH")
 
     def apply_license(self):
-        # logging.warning(self.license_path)
         from aspose.cells import License
         if self.license_path and os.path.exists(self.license_path):
             logging.info(f"Applying Aspose license from: {self.license_path}")
             lic = License()
             lic.set_license(self.license_path)
-
         else:
-            logging.warning("=====> No valid Aspose license found.Running in free mode.Please set the ASPOSE_LICENSE_PATH environment variable!! <=====")
-
+            logging.warning("=====> No valid Aspose license found. Running in free mode. Please set the ASPOSE_LICENSE_PATH environment variable!! <=====")
 
 
 class ExcelCell(BaseModel):
@@ -95,7 +92,7 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
     Each worksheet is converted into a separate page.
     The following elements are parsed:
     - Cell contents, parsed as tables. If two groups of cells are disconnected
-    between each other, they will be parsed as two different tables.
+      from each other, they will be parsed as two different tables.
     - Images, parsed as PictureItem objects.
 
     The DoclingDocument tables and pictures have their provenance information, including
@@ -119,7 +116,7 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
         """
         super().__init__(in_doc, path_or_stream)
 
-        # Initialise the parents for the hierarchy
+        # Initialize the parent hierarchy
         self.max_levels = 10
 
         self.parents: dict[int, Any] = {}
@@ -138,7 +135,6 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
             self.valid = self.workbook is not None
         except Exception as e:
             self.valid = False
-
             raise RuntimeError(
                 f"MsExcelDocumentBackend could not load document with hash {self.document_hash}"
             ) from e
@@ -211,8 +207,6 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
                 _log.info(f"Processing sheet: {sheet_name}")
 
                 page_no = ws.index + 1
-                # print(page_no)
-                # do not rely on sheet.max_column, sheet.max_row if there are images
                 page = doc.add_page(page_no=page_no, size=Size(width=0, height=0))
 
                 self.parents[0] = doc.add_group(
@@ -229,7 +223,7 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
         return doc
 
     def _convert_sheet(self, doc: DoclingDocument, sheet: Worksheet) -> DoclingDocument:
-        """Parse an Excel worksheet and attach its structure to a DoclingDocument
+        """Parse an Excel worksheet and attach its structure to a DoclingDocument.
 
         Args:
             doc: The DoclingDocument to be updated.
@@ -238,11 +232,8 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
         Returns:
             The updated DoclingDocument.
         """
-
         doc = self._find_tables_in_sheet(doc, sheet)
-
         doc = self._find_images_in_sheet(doc, sheet)
-
         return doc
 
     def _find_tables_in_sheet(
@@ -308,9 +299,9 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
 
         return doc
 
-    def _build_merged_lookup(self,areas):
+    def _build_merged_lookup(self, areas):
         """
-        areas: iterable of CellArea（来自 sheet.cells.get_merged_areas()）
+        areas: iterable of CellArea (from sheet.cells.get_merged_areas())  
         return: dict[(r,c)] -> CellArea
         """
         lookup = {}
@@ -320,56 +311,51 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
                     lookup[(r, c)] = a
         return lookup
 
-
-    def _get_bounds_from_area(self,area):
-        """给 CellArea 算 (row_span, col_span) 与 (end_row, end_col)"""
+    def _get_bounds_from_area(self, area):
+        """Compute (row_span, col_span) and (end_row, end_col) for a CellArea"""
         row_span = area.end_row - area.start_row + 1
         col_span = area.end_column - area.start_column + 1
         return row_span, col_span, area.end_row, area.end_column
 
-
-    # -------------------- 1) 找表格底边 --------------------
-    def _find_table_bottom(self, sheet:Worksheet, start_row: int, start_col: int) -> int:
+    # -------------------- 1) Find table bottom --------------------
+    def _find_table_bottom(self, sheet: Worksheet, start_row: int, start_col: int) -> int:
         """
-        等价于你在 openpyxl 中的 _find_table_bottom：
-        从 (start_row, start_col) 的下一行开始往下扫，遇到“空且不在合并区”的单元格就停；
-        如果在合并区，则把底边扩到合并区的 end_row。
-        注意：Aspose 的行列索引是 0-based。
+        Equivalent to _find_table_bottom in openpyxl version:
+        Starting from the row after (start_row, start_col), scan downward. 
+        Stop when an empty cell (not in a merged area) is found.
+        If inside a merged area, extend the bottom to the merged area's end_row.
+        Note: Aspose uses 0-based indices.
         """
         max_row = start_row
 
         cells = sheet.cells
-        # 用 MaxDataRow / MaxDataColumn 更稳妥（仅数据范围），比 max_row/max_column 更常用
         last_row = cells.max_data_row if hasattr(cells, "max_data_row") else cells.max_row
 
         areas = list(cells.get_merged_areas() or [])
         merged_lookup = self._build_merged_lookup(areas)
 
-        # 从下一行开始扫描
         for ri in range(start_row + 1, last_row + 1):
             cell = cells.get(ri, start_col)
             area = merged_lookup.get((ri, start_col))
 
-            # 空且不在合并区：到底了
             if (cell is None or cell.value is None) and area is None:
                 break
 
             if area is not None:
-                # 扩到底到合并区的末行
                 _, _, end_r, _ = self._get_bounds_from_area(area)
                 max_row = max(max_row, end_r)
             else:
-                # 普通非空 cell，底边推进一行
                 max_row = ri
 
         return max_row
 
-
-    # -------------------- 2) 找表格右边 --------------------
-    def _find_table_right(self, sheet:Worksheet, start_row: int, start_col: int) -> int:
+    # -------------------- 2) Find table right --------------------
+    def _find_table_right(self, sheet: Worksheet, start_row: int, start_col: int) -> int:
         """
-        等价于 openpyxl 版本的 _find_table_right：从起始列右侧开始扫，
-        遇到“空且不在合并区”的单元格就停；在合并区就扩到 end_column。
+        Equivalent to _find_table_right in openpyxl version:
+        Scan to the right from the starting column. 
+        Stop when an empty cell (not in a merged area) is found.
+        If inside a merged area, extend to the merged area's end_column.
         """
         max_col = start_col
 
@@ -394,12 +380,12 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
 
         return max_col
 
-
-    # -------------------- 3) 收集数据 + 跨度 --------------------
-    def _find_table_bounds(self,sheet :Worksheet, start_row: int, start_col: int):
+    # -------------------- 3) Collect data + spans --------------------
+    def _find_table_bounds(self, sheet: Worksheet, start_row: int, start_col: int):
         """
-        返回： (ExcelTable, visited_cells)
-        这里保持与你现有结构一致：计算 (num_rows, num_cols) 和每个单元的 row_span/col_span。
+        Returns: (ExcelTable, visited_cells)
+        Keeps the same structure as your existing version:
+        Calculates (num_rows, num_cols) and each cell's row_span/col_span.
         """
         max_row = self._find_table_bottom(sheet, start_row, start_col)
         max_col = self._find_table_right(sheet, start_row, start_col)
@@ -423,7 +409,6 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
                 else:
                     row_span, col_span = 1, 1
 
-                # 你项目里用的是 ExcelCell 数据类；这里按你的字段名组织
                 data.append(
                     ExcelCell(
                         row=ri - start_row,
@@ -434,7 +419,6 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
                     )
                 )
 
-                # 把合并区内部坐标全部标记为 visited
                 for r in range(ri, ri + row_span):
                     for c in range(cj, cj + col_span):
                         visited_cells.add((r, c))
@@ -446,7 +430,6 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
             data=data,
         )
         return table, visited_cells
-
 
     def _find_data_tables(self, sheet: Worksheet) -> list:
         tables = []
@@ -475,15 +458,13 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
 
         if self.workbook is not None:
             try:
-                pictures = sheet.pictures  # type: PictureCollection
+                pictures = sheet.pictures
                 page_no = sheet.index + 1
 
                 for pic in pictures:  # type: Picture
-                    # 获取图片数据为字节流
                     img_bytes = pic.data
                     pil_image = PILImage.open(BytesIO(img_bytes))
 
-                    # 获取锚点范围
                     anchor = (
                         pic.upper_left_column,
                         pic.upper_left_row,
@@ -491,7 +472,6 @@ class MsExcelDocumentBackend(DeclarativeDocumentBackend, PaginatedDocumentBacken
                         pic.lower_right_row + 1,
                     )
 
-                    # 添加到 DoclingDocument
                     doc.add_picture(
                         parent=self.parents[0],
                         image=ImageRef.from_pil(image=pil_image, dpi=72),
