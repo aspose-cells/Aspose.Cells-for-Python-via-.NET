@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Excel Report Demo</title>
+  <style>
+    body { font-family: sans-serif; margin: 50px; }
+    button { padding: 10px 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h2>📊 Django + Aspose.Cells Report Export</h2>
+  <p>Click the button below to generate an Excel report:</p>
+  <form action="{% url 'export_report' %}" method="get">
+    <button type="submit">Download Sales Report</button>
+  </form>
+</body>
+</html>
