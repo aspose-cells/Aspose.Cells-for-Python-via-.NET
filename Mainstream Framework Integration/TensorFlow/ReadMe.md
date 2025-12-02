@@ -1,8 +1,8 @@
 # TensorFlow + Aspose.Cells for Python via .NET Demo
 
 This demo shows how to train a simple linear regression model using
-**TensorFlow**, generate predictions, and write the results into an
-Excel file using **Aspose.Cells for Python via .NET**. A line chart is
+[**TensorFlow**](https://www.tensorflow.org/), generate predictions, and write the results into an
+Excel file using [**Aspose.Cells for Python**](https://pypi.org/project/aspose-cells-python/). A line chart is
 also created based on the prediction output.
 
 ------------------------------------------------------------------------
