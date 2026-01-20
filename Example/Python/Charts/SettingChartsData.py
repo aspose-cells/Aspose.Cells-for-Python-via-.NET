@@ -1,15 +1,13 @@
 import os
-from aspose.cells import *
-from aspose.cells.drawing import *
-from aspose.cells.charts import *
+import aspose.cells as cells
+from aspose.cells.charts import ChartType
 
 def get_output_directory():
-    return os.path.abspath(os.path.join(".",   "..", "..", "Data", "02_OutputDirectory"))
+    return os.path.abspath(os.path.join(".", "..", "..", "Data", "02_OutputDirectory"))
 
 def run_setting_charts_data():
     output_dir = get_output_directory()
-
-    workbook = Workbook()
+    workbook = cells.Workbook()
     worksheet = workbook.worksheets[0]
 
     worksheet.cells.get("A1").put_value(50.0)
@@ -30,8 +28,8 @@ def run_setting_charts_data():
     chart = worksheet.charts[chart_index]
     chart.n_series.add("A1:B4", True)
 
-    output_file = os.path.join(output_dir, "outputSettingChartsData.xlsx")
-    workbook.save(output_file)
+    output_path = os.path.join(output_dir, "outputSettingChartsData.xlsx")
+    workbook.save(output_path)
 
     print("SettingChartsData executed successfully.")
 

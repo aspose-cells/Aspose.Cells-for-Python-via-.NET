@@ -1,7 +1,6 @@
 import os
 import io
-from aspose.cells import Workbook
-from aspose.cells.charts import Chart
+import aspose.cells as cells
 
 def get_source_directory():
     return os.path.abspath(os.path.join(".", "..", "..", "Data", "01_SourceDirectory"))
@@ -14,7 +13,7 @@ def run_chart_to_pdf():
     output_dir = get_output_directory()
 
     # Load excel file containing charts
-    workbook = Workbook(os.path.join(source_dir, "sampleChartToPdf.xlsx"))
+    workbook = cells.Workbook(os.path.join(source_dir, "sampleChartToPdf.xlsx"))
 
     # Access first worksheet
     worksheet = workbook.worksheets[0]
@@ -26,8 +25,8 @@ def run_chart_to_pdf():
     chart.to_pdf(os.path.join(output_dir, "outputChartToPdf.pdf"))
 
     # Save the chart into pdf format in stream
-    stream = io.BytesIO()
-    chart.to_pdf(stream)
+    pdf_stream = io.BytesIO()
+    chart.to_pdf(pdf_stream)
 
     print("ChartToPdf executed successfully.")
 

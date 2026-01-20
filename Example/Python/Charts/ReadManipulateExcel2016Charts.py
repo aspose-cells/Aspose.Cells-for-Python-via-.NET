@@ -1,6 +1,5 @@
 import os
-from aspose.cells import *
-from aspose.cells.charts import *
+import aspose.cells as cells
 
 def get_source_directory():
     return os.path.abspath(os.path.join(".", "..", "..", "Data", "01_SourceDirectory"))
@@ -12,7 +11,9 @@ def run_read_manipulate_excel2016_charts():
     source_dir = get_source_directory()
     output_dir = get_output_directory()
 
-    workbook = Workbook(os.path.join(source_dir, "sampleReadManipulateExcel2016Charts.xlsx"))
+    input_file = os.path.join(source_dir, "sampleReadManipulateExcel2016Charts.xlsx")
+    workbook = cells.Workbook(input_file)
+
     worksheet = workbook.worksheets[0]
 
     for i in range(len(worksheet.charts)):
@@ -20,7 +21,9 @@ def run_read_manipulate_excel2016_charts():
         print(chart.type)
         chart.title.text = f"Chart Type is {chart.type}"
 
-    workbook.save(os.path.join(output_dir, "outputReadManipulateExcel2016Charts.xlsx"))
+    output_file = os.path.join(output_dir, "outputReadManipulateExcel2016Charts.xlsx")
+    workbook.save(output_file)
+
     print("ReadManipulateExcel2016Charts executed successfully.")
 
 if __name__ == "__main__":

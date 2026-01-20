@@ -1,7 +1,5 @@
 import os
-from aspose.cells import Workbook
-from aspose.cells.drawing import *
-from aspose.cells.charts import *
+import aspose.cells as cells
 
 def get_source_directory():
     return os.path.abspath(os.path.join(".", "..", "..", "Data", "01_SourceDirectory"))
@@ -14,7 +12,7 @@ def run_set_values_format_code_of_chart_series():
     output_dir = get_output_directory()
 
     input_file = os.path.join(source_dir, "sampleSeries_ValuesFormatCode.xlsx")
-    workbook = Workbook(input_file)
+    workbook = cells.Workbook(input_file)
 
     worksheet = workbook.worksheets[0]
     chart = worksheet.charts[0]

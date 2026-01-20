@@ -1,15 +1,11 @@
 import os
-from aspose.cells import *
-from aspose.cells.drawing import *
-from aspose.cells.charts import *
+import aspose.cells as cells
 
 def get_output_directory():
     return os.path.abspath(os.path.join(".", "..", "..", "Data", "02_OutputDirectory"))
 
 def run_setting_category_data():
-    output_dir = get_output_directory()
-
-    workbook = Workbook()
+    workbook = cells.Workbook()
     worksheet = workbook.worksheets[0]
 
     worksheet.cells.get("A1").put_value(10.0)
@@ -26,16 +22,14 @@ def run_setting_category_data():
     worksheet.cells.get("C3").put_value("Y1")
     worksheet.cells.get("C4").put_value("Y2")
 
-    chart_index = worksheet.charts.add(ChartType.COLUMN, 5, 0, 15, 5)
+    chart_index = worksheet.charts.add(cells.charts.ChartType.COLUMN, 5, 0, 15, 5)
     chart = worksheet.charts[chart_index]
 
     chart.n_series.add("A1:B4", True)
     chart.n_series.category_data = "C1:C4"
 
-    output_path = os.path.join(output_dir, "outputSettingCategoryData.xlsx")
-    workbook.save(output_path)
-
-    print("SettingCategoryData executed successfully.")
+    output_file = os.path.join(get_output_directory(), "outputSettingCategoryData.xlsx")
+    workbook.save(output_file)
 
 if __name__ == "__main__":
     run_setting_category_data()
