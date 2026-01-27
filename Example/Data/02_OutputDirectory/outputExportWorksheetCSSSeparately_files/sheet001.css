@@ -1,0 +1,12 @@
+table
+ {mso-displayed-decimal-separator:"\.";
+ mso-displayed-thousand-separator:"\,";}
+@page
+ {
+ mso-header-data:"";
+ mso-footer-data:"";
+ margin:1in 0.75in 1in 0.75in;
+ mso-header-margin:0.5in;
+ mso-footer-margin:0.5in;
+ mso-page-orientation:Portrait;
+ }

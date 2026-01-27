@@ -1,0 +1,87 @@
+#MyTest_TableCssId tr
+ {mso-height-source:auto;
+ mso-ruby-visibility:none;}
+#MyTest_TableCssId col
+ {mso-width-source:auto;
+ mso-ruby-visibility:none;}
+#MyTest_TableCssId br
+ {mso-data-placement:same-cell;}
+ruby
+ {ruby-align:start;}
+.style0
+ {
+ mso-number-format:General;
+ text-align:general;
+ vertical-align:middle;
+ white-space:nowrap;
+ background:auto;
+ mso-pattern:auto;
+ color:#000000;
+ font-size:10pt;
+ font-weight:400;
+ font-style:normal;
+ font-family:Arial,sans-serif;
+ mso-protection:locked visible;
+ mso-style-name:Normal;
+ mso-style-id:0;}
+#MyTest_TableCssId td
+ {mso-style-parent:style0;
+ mso-number-format:General;
+ text-align:general;
+ vertical-align:middle;
+ white-space:nowrap;
+ background:auto;
+ mso-pattern:auto;
+ color:#000000;
+ font-size:10pt;
+ font-weight:400;
+ font-style:normal;
+ font-family:Arial,sans-serif;
+ mso-protection:locked visible;
+ mso-ignore:padding;
+ }
+#MyTest_TableCssId .x15
+ {
+ mso-number-format:General;
+ text-align:general;
+ vertical-align:middle;
+ white-space:nowrap;
+ background:auto;
+ mso-pattern:auto;
+ color:#000000;
+ font-size:10pt;
+ font-weight:400;
+ font-style:normal;
+ font-family:Arial,sans-serif;
+ mso-protection:locked visible;
+ }
+#MyTest_TableCssId .x21
+ {
+ mso-number-format:General;
+ text-align:general;
+ vertical-align:middle;
+ white-space:nowrap;
+ background:auto;
+ mso-pattern:auto;
+ color:#FF0000;
+ font-size:10pt;
+ font-weight:400;
+ font-style:normal;
+ font-family:Arial,sans-serif;
+ mso-protection:locked visible;
+ }
+#MyTest_TableCssId .x22
+ {
+ mso-number-format:General;
+ text-align:general;
+ vertical-align:middle;
+ white-space:nowrap;
+ background:auto;
+ mso-pattern:auto;
+ color:#0000FF;
+ font-size:18pt;
+ font-weight:700;
+ font-style:italic;
+ font-family:Arial,sans-serif;
+ mso-protection:locked visible;
+ }
