@@ -2,7 +2,7 @@ import os
 import aspose.cells as cells
 
 def get_output_directory():
-    return os.path.abspath(os.path.join(".", "..", "..", "Data", "02_OutputDirectory"))
+    return (Path(__file__).parent / ".." / ".." / "Data" / "02_OutputDirectory").resolve()
 
 def run_specify_language_of_excel_file_using_builtin_document_properties():
     output_dir = get_output_directory()
