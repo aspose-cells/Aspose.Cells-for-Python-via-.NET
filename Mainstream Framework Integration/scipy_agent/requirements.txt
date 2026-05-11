@@ -1,0 +1,6 @@
+aspose-cells-python
+numpy
+scipy
+pandas
+openai
+python-dotenv
