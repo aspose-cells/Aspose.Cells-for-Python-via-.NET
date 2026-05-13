@@ -1,19 +1,21 @@
 import numpy as np
-from scipy.optimize import curve_fit
+from scipy.stats import linregress
 
 
-class RegressionAnalyzer:
+class RegressionAnalysis:
 
-    def linear_func(self, x, a, b):
-        return a * x + b
+    @staticmethod
+    def linear_regression(values):
 
-    def fit(self, x_values, y_values):
-        x = np.array(x_values, dtype=float)
-        y = np.array(y_values, dtype=float)
+        x = np.arange(len(values))
+        y = np.array(values, dtype=float)
 
-        params, _ = curve_fit(self.linear_func, x, y)
+        result = linregress(x, y)
 
         return {
-            "slope": params[0],
-            "intercept": params[1]
+            "slope": result.slope,
+            "intercept": result.intercept,
+            "rvalue": result.rvalue,
+            "pvalue": result.pvalue,
+            "stderr": result.stderr
         }

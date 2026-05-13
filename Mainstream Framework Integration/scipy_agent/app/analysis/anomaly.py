@@ -1,18 +1,24 @@
 import numpy as np
-from scipy.stats import zscore
+from scipy import stats
 
 
-class AnomalyAnalyzer:
+class AnomalyAnalysis:
 
-    def detect(self, values, threshold=2.0):
-        array = np.array(values, dtype=float)
+    @staticmethod
+    def detect_zscore(values, threshold=3):
 
-        scores = zscore(array)
+        arr = np.array(values, dtype=float)
+
+        z_scores = np.abs(stats.zscore(arr))
 
         anomalies = []
 
-        for index, score in enumerate(scores):
-            if abs(score) > threshold:
-                anomalies.append(index)
+        for i, z in enumerate(z_scores):
+            if z > threshold:
+                anomalies.append({
+                    "index": i,
+                    "value": arr[i],
+                    "zscore": float(z)
+                })
 
         return anomalies

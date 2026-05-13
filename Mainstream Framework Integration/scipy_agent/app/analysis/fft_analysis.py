@@ -2,13 +2,15 @@ import numpy as np
 from scipy.fft import fft
 
 
-class FFTAnalyzer:
+class FFTAnalysis:
 
-    def analyze(self, values):
-        signal = np.array(values, dtype=float)
+    @staticmethod
+    def analyze(values):
 
-        result = fft(signal)
+        arr = np.array(values, dtype=float)
 
-        magnitude = np.abs(result)
+        spectrum = fft(arr)
+
+        magnitude = np.abs(spectrum)
 
         return magnitude.tolist()

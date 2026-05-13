@@ -1,6 +1,11 @@
 aspose-cells-python
 numpy
-scipy
 pandas
+scipy
+scikit-learn
+statsmodels
+openpyxl
+matplotlib
 openai
 python-dotenv
+pydantic

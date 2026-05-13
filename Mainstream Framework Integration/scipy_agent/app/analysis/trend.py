@@ -1,7 +1,17 @@
 import numpy as np
+from scipy.signal import savgol_filter
 
 
-class TrendAnalyzer:
+class TrendAnalysis:
 
-    def moving_average(self, values, window=3):
-        return np.convolve(values, np.ones(window), 'valid') / window
+    @staticmethod
+    def smooth(values):
+
+        arr = np.array(values, dtype=float)
+
+        if len(arr) < 5:
+            return arr.tolist()
+
+        smoothed = savgol_filter(arr, 5, 2)
+
+        return smoothed.tolist()

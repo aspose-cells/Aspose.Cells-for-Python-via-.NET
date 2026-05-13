@@ -1,18 +1,18 @@
-from agents.excel_agent import ExcelAnalysisAgent
+from agents.excel_agent import ExcelAgent
 
 
 def main():
-    agent = ExcelAnalysisAgent()
+    agent = ExcelAgent()
 
     input_file = "../samples/sales.xlsx"
-    output_file = "../output/sales_analysis.xlsx"
-
     user_prompt = "Analyze sales trends and detect anomalies"
 
+    output_file = "../output/sales_analysis.xlsx"
+
     agent.run(
-        input_file=input_file,
+        file_path = input_file,
         output_file=output_file,
-        user_prompt=user_prompt
+        user_request = user_prompt
     )
 
     print("Analysis complete")

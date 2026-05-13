@@ -1,14 +1,18 @@
 import aspose.cells as cells
 
-
 class ExcelWriter:
 
-    def save(self, workbook, output_path: str):
+    @staticmethod
+    def write_report(output_path, reports):
+
+        workbook = cells.Workbook()
+        sheet = workbook.worksheets[0]
+
+        row = 0
+
+        for key, value in reports.items():
+            sheet.cells.get(row, 0).put_value(str(key))
+            sheet.cells.get(row, 1).put_value(str(value))
+            row += 1
+
         workbook.save(output_path)
-
-    def add_summary_sheet(self, workbook, text: str):
-        index = workbook.worksheets.add()
-        sheet = workbook.worksheets[index]
-        sheet.name = "Summary"
-
-        sheet.cells.get("A1").put_value(text)

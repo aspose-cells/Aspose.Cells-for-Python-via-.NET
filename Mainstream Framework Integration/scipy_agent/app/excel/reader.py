@@ -1,10 +1,24 @@
 import aspose.cells as cells
+import pandas as pd
 
 
 class ExcelReader:
 
-    def load_workbook(self, path: str):
-        return cells.Workbook(path)
+    @staticmethod
+    def load_sheet_as_dataframe(file_path, sheet_index=0):
+        workbook = cells.Workbook(file_path)
+        worksheet = workbook.worksheets[sheet_index]
 
-    def get_first_sheet(self, workbook):
-        return workbook.worksheets[0]
+        rows = worksheet.cells.max_data_row + 1
+        cols = worksheet.cells.max_data_column + 1
+
+        data = []
+
+        for r in range(rows):
+            row = []
+            for c in range(cols):
+                row.append(worksheet.cells.get(r, c).value)
+            data.append(row)
+
+        df = pd.DataFrame(data[1:], columns=data[0])
+        return df
